@@ -21,10 +21,7 @@ while len(correct_guesses) < 17:
     answer_formatted = answer.title()
 
     if answer_formatted == "Fin":
-        missing_answers = []
-        for state in communities_list:
-            if state not in correct_guesses:
-                missing_answers.append(state)
+        missing_answers = [state for state in communities_list if state not in correct_guesses]
         new_data = pandas.DataFrame(missing_answers)
         states_missing = new_data.to_csv("answers_missing.csv")
 
@@ -39,7 +36,6 @@ while len(correct_guesses) < 17:
         state_data = data[data.name == answer_formatted]
         t.goto(int(state_data.x), int(state_data.y))
         t.write(answer_formatted, move=False, align='left', font=('Arial', 12, 'bold'))
-        #t.write(state-data.name.item())
 
     else:
         answer_state = screen.textinput(title=f"{len(correct_guesses)}/17 aciertos", 
